@@ -48,6 +48,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    //設定 section 數量
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return info.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    
+        var title : String = ""
+        if section == 0 {
+            title = "籃球"
+        } else {
+            title = "棒球"
+        }
+        
+        return title
+    }
+    
     //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return info[section].count
@@ -55,7 +72,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //取得tableView目前使用的 cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
+        
+        //設定 Accessory 按鈕樣式
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                cell.accessoryType = .checkmark
+            }else if indexPath.row == 1 {
+                cell.accessoryType = .detailButton
+            }else if indexPath.row == 2 {
+                cell.accessoryType = .detailDisclosureButton
+            }else {
+                cell.accessoryType = .disclosureIndicator
+            }
+        }
+        
+        //顯示內容
+        if let myLabel = cell.textLabel {
+            myLabel.text = "\(info[indexPath.section][indexPath.row])"
+        }
         
         
         return cell
