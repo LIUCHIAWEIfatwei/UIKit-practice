@@ -109,5 +109,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print("按下的是 \(name) detail.")
     }
 
+    /*
+    //設置每個 section 的 title 為 UIView
+    //會蓋過單純設定文字的title
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let red = UIView()
+        red.backgroundColor = UIColor.red
+        return red
+    }
+    */
+    
+    
+    //設置 section header 高度
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
+    //設定 section footer
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "hello"
+    }
+    
+    //設定 cell 高度
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
 }
 
