@@ -65,15 +65,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return title
     }
     
-    //
+    //設定 cell 數量
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return info[section].count
     }
     
+    //cell 顯示的內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //取得tableView目前使用的 cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
-        
         //設定 Accessory 按鈕樣式
         if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -86,16 +86,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cell.accessoryType = .disclosureIndicator
             }
         }
-        
         //顯示內容
         if let myLabel = cell.textLabel {
             myLabel.text = "\(info[indexPath.section][indexPath.row])"
         }
-        
-        
         return cell
     }
+    
+    //點選 cell 後執行動作
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //取消cell 選取狀態
+        tableView.deselectRow(at: indexPath, animated: true)
+        //動作測試
+        let name = info[indexPath.section][indexPath.row]
+        print("選擇的是 \(name)")
+    }
 
+    //點選 Accessory 按鈕後執行的動作
+    //必須設置 cell 的 accessoryType 為 .detailButton || .detailDisclosureButton
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let name = info[indexPath.section][indexPath.row]
+        print("按下的是 \(name) detail.")
+    }
 
 }
 
