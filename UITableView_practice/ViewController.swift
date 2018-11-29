@@ -24,7 +24,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //註冊 cell
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        //
+        //設定分隔線樣式
+        myTableView.separatorStyle = .singleLine
+        
+        //分隔線的間隔 上左下右
+        myTableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        //是否可以點選 cell
+        myTableView.allowsSelection = true
+        
+        //是否可以多選 cell
+        myTableView.allowsMultipleSelection = false
+        
+        
         
         //設置委任對象
         myTableView.dataSource = self
