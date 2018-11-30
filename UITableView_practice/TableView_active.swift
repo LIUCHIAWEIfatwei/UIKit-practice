@@ -99,6 +99,47 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         return true
     }
     
+    //編輯狀態時 拖曳切換 cell 位置後 執行動作 方法
+    //必須實作這個方法才會出現 拖曳功能
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        print("\(sourceIndexPath.row) to \(destinationIndexPath.row)")
+        
+        var tempArr : [String] = []
+        
+        if (sourceIndexPath.row) > (destinationIndexPath.row) {
+            //排到後面的  往前
+            for (index, value) in info.enumerated() {
+                if index < destinationIndexPath.row || index > sourceIndexPath.row {
+                    tempArr.append(value)
+                } else if index == destinationIndexPath.row {
+                    tempArr.append(info[sourceIndexPath.row])
+                } else if index <= sourceIndexPath.row {
+                    tempArr.append(info[index - 1])
+                }
+            }
+        }
+        else if (sourceIndexPath.row) < (destinationIndexPath.row) {
+            //排在前面的 往後
+            for (index, value) in info.enumerated() {
+                if index < sourceIndexPath.row || index > destinationIndexPath.row {
+                    tempArr.append(value)
+                } else if index < destinationIndexPath.row {
+                    tempArr.append(info[index + 1])
+                } else if index == destinationIndexPath.row {
+                    tempArr.append(info[sourceIndexPath.row])
+                }
+            }
+        }
+        else {
+            tempArr = info
+        }
+        info = tempArr
+        
+    }
+    
+    
+    
     //設定section 數量
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -113,7 +154,6 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell, for: indexPath) as UITableViewCell
-        
         
         //顯示內容
         if let myLabel = cell.textLabel {
