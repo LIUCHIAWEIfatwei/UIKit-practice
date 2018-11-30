@@ -23,16 +23,14 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //基本設定
+        //基本設定 (AppDelegate)
         //建立 UIScreen
-        let fullScreenSize = UIScreen.main.bounds.size
+        let fullScreenSize : CGSize = UIScreen.main.bounds.size
         
-        //設定 TableView_active view backgroundColor
-        self.view.backgroundColor = UIColor.blue
         
         self.title = "編輯模式"
         
-        self.navigationController!.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
         
         
         //建立 TableView
@@ -41,7 +39,7 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         
         //設定 cell
-        myTableView.register(UITableView.self, forCellReuseIdentifier: Cell)
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: Cell)
         
         //導覽列左(右)邊 按鈕 編輯 & 新增
         myTableView.setEditing(true, animated: false)
@@ -51,6 +49,15 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         //繼承
         myTableView.dataSource = self
         myTableView.delegate = self
+        
+        //是否可以點選 cell
+        myTableView.allowsSelection = true
+        
+        //是否可以多選 cell
+        myTableView.allowsMultipleSelection = false
+        
+        //加入畫面
+        self.view.addSubview(myTableView)
         
         
     }
@@ -92,14 +99,26 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         return true
     }
     
-    //設定
+    //設定section 數量
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    //設定 cell 數量
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return info.count
     }
     
+    //cell 顯示內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cell, for: indexPath) as UITableViewCell
+        
+        
+        //顯示內容
+        if let myLabel = cell.textLabel {
+            myLabel.text = "\(info[indexPath.row])"
+        }
         
         return cell
     }
