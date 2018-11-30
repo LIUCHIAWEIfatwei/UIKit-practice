@@ -138,6 +138,22 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         
     }
     
+    //編輯狀態時 按下刪除 cell 後 執行動作 方法
+    //必須實作這個方法 才能左滑刪除
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let name : String = info[indexPath.row]
+        
+        if editingStyle == .delete {
+            info.remove(at: indexPath.row)
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+            
+            print("刪除的是 \(name)")
+            
+        }
+    }
     
     
     //設定section 數量
