@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TableViewNormal: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     
@@ -20,6 +20,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //設置UITableView. 並設置原點&尺寸.
         let myTableView = UITableView(frame: CGRect(x: 0, y: 20, width: fullScreen.width , height: fullScreen.height - 20), style: .grouped)
+        
+        //取消 UITableView 的 autoLayout
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
         
         //註冊 cell
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
