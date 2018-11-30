@@ -19,7 +19,7 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
     var info : [String] = ["林書豪", "陳信安","陳偉殷","王建民","王大明","葉大雄"]
     
     //設定 Cell 名稱
-    let cell = "Cell"
+    let Cell = "Cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         
         //設定 cell
-        myTableView.register(UITableView.self, forCellReuseIdentifier: cell)
+        myTableView.register(UITableView.self, forCellReuseIdentifier: Cell)
         
         //導覽列左(右)邊 按鈕 編輯 & 新增
         myTableView.setEditing(true, animated: false)
@@ -76,19 +76,32 @@ class TableView_active: UIViewController, UITableViewDataSource, UITableViewDele
         }
     }
     
+    //按下 新增按鈕 執行動作 方法
     @objc func addBtnAction()  {
         print("add complete")
+        info.insert("new row", at: 0)
+        
+        //新增 cell 在第一筆 row
+        myTableView.beginUpdates()
+        myTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        myTableView.endUpdates()
     }
     
-    
+    //各cell 是否可以進入編輯狀態 及 左滑刪除
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
     //設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return info.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cell, for: indexPath)
+        
+        return cell
     }
     
     
